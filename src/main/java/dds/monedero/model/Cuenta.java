@@ -25,10 +25,6 @@ public class Cuenta {
     saldo = montoInicial;
   }
 
-  public void setMovimientos(List<Movimiento> movimientos) {
-    this.movimientos = movimientos;
-  }
-
   public void poner(Double unMonto) {
     this.validarMonto(unMonto);
     this.validarLimiteDepositosDiarios();
@@ -97,12 +93,17 @@ public class Cuenta {
     return movimientos;
   }
 
+  private void setMovimientos(List<Movimiento> movimientos) {
+    this.movimientos = movimientos;
+  }
+
   public Double getSaldo() {
     return saldo;
   }
 
-  public void setSaldo(Double saldo) {
+  private void setSaldo(Double saldo) {
     this.saldo = saldo;
   }
+
 
 }
