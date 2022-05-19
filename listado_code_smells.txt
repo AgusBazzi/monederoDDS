@@ -1,0 +1,17 @@
+Dentro de la clase Cuenta:
+- El tipo de dato de saldo es primitivo
+- El tipo de dato de la mayoría de parámetros en los métodos son primitivos.
+- El tipo de dato de retorno de los métodos también son primitivos.
+- La responsabilidad de movimiento para agregarse errónea. La cuenta ya tiene la información necesaria para modificar sus propios datos.
+- El método "sacar" considero que es demasiado largo y debería delegar a otros ciertas acciones.
+- El método "getMontoExtraidoA" rompe encapsulamiento y podría delegar la condición de filtrado al Movimiento.
+- Setter de saldo público.
+
+
+Dentro de la clase Movimiento:
+- Tipos de datos de atributos pimitivos.
+- En el método "agregateA", en vez de pasarse a sí mismo, pasa a todos sus atributos, lo que genera demasiados parámetros. Adicionalmente, luego en la cuenta se crea un objeto diferente, cosa innecesaria.
+- Relacionado a lo anterior, el movimiento cambia el saldo de la cuenta cuando sería más acorde que lo haga la cuenta propia.
+- Los métodos "fueDepositado" y "fueExtraido" están bien hechos pero no se utilizan y se repite en sí la lógica en la Cuenta.
+- No sé si considerarlo un CodeSmell, sino más bien una decisión de diseño: no me parece propio del paradigma de objetos guardar un estado como bool (en este caso, sobre si es depósito o extracción). Quizás utilizar herencia sería mejor.
+
