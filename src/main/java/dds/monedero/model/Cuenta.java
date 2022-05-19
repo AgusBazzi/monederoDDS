@@ -28,8 +28,10 @@ public class Cuenta {
   public void poner(Double unMonto) {
     this.validarMonto(unMonto);
     this.validarLimiteDepositosDiarios();
+
     this.setSaldo(this.getSaldo() + unMonto);
-    this.agregarMovimiento(LocalDate.now(), unMonto, true);
+    Movimiento nuevoMovimiento = new Movimiento(LocalDate.now(), unMonto, true);
+    this.agregarMovimiento(nuevoMovimiento);
   }
 
   public void sacar(Double unMonto) {
@@ -37,7 +39,9 @@ public class Cuenta {
     this.validarSaldoSuficiente(unMonto);
     this.validarLimiteExtraccionDiario(unMonto);
     this.setSaldo(this.getSaldo() - unMonto);
-    this.agregarMovimiento(LocalDate.now(), unMonto, false);
+    Movimiento nuevoMovimiento = new Movimiento(LocalDate.now(), unMonto, false);
+    this.agregarMovimiento(nuevoMovimiento);
+
   }
 
   private void validarMonto(Double unMonto) {
@@ -77,9 +81,8 @@ public class Cuenta {
     }
   }
 
-  private void agregarMovimiento(LocalDate fecha, Double cuanto, Boolean esDeposito) {
-    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
-    movimientos.add(movimiento);
+  private void agregarMovimiento(Movimiento unMovimiento) {
+    movimientos.add(unMovimiento);
   }
 
   public Double getMontoExtraidoA(LocalDate unaFecha) {
