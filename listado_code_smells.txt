@@ -3,9 +3,11 @@ Dentro de la clase Cuenta:
 - El tipo de dato de la mayoría de parámetros en los métodos son primitivos.
 - El tipo de dato de retorno de los métodos también son primitivos.
 - La responsabilidad de movimiento para agregarse errónea. La cuenta ya tiene la información necesaria para modificar sus propios datos.
-- El método "sacar" considero que es demasiado largo y debería delegar a otros ciertas acciones.
+- Los métodso "sacar" y "ponre" considero que son demasiado largos y deberían delegar a otros ciertas acciones. Adicionalmente, repiten lógica.
 - El método "getMontoExtraidoA" rompe encapsulamiento y podría delegar la condición de filtrado al Movimiento.
 - Setter de saldo público.
+- Cantidad máxima de depósitos diarios se podría mover a un atributo.
+- Monto máximo diario también se podría poner como atributo de la clase.
 
 
 Dentro de la clase Movimiento:
