@@ -28,9 +28,8 @@ public class Cuenta {
   public void poner(Double unMonto) {
     this.validarMonto(unMonto);
     this.validarLimiteDepositosDiarios();
-
-    this.setSaldo(this.getSaldo() + unMonto);
-    Movimiento nuevoMovimiento = new Movimiento(LocalDate.now(), unMonto, true);
+    this.aumentarSaldo(unMonto);
+    Movimiento nuevoMovimiento = new MovimientoDeposito(LocalDate.now(), unMonto);
     this.agregarMovimiento(nuevoMovimiento);
   }
 
@@ -38,10 +37,9 @@ public class Cuenta {
     this.validarMonto(unMonto);
     this.validarSaldoSuficiente(unMonto);
     this.validarLimiteExtraccionDiario(unMonto);
-    this.setSaldo(this.getSaldo() - unMonto);
-    Movimiento nuevoMovimiento = new Movimiento(LocalDate.now(), unMonto, false);
+    this.reducirSaldo(unMonto);
+    Movimiento nuevoMovimiento = new MovimientoExtraccion(LocalDate.now(), unMonto);
     this.agregarMovimiento(nuevoMovimiento);
-
   }
 
   private void validarMonto(Double unMonto) {
@@ -55,7 +53,7 @@ public class Cuenta {
     List<Movimiento> depositosDeHoy =
         this.movimientos
             .stream()
-            .filter(mov -> mov.fueDepositado(LocalDate.now()))
+            .filter(mov -> mov.fueDepositadoEn(LocalDate.now()))
             .collect(Collectors.toList());
 
     if (depositosDeHoy.size() >= this.limiteDiarioDeposito) {
@@ -81,23 +79,27 @@ public class Cuenta {
     }
   }
 
+  private void reducirSaldo(Double unMonto) {
+    this.setSaldo(this.getSaldo() - unMonto);
+  }
+
+  private void aumentarSaldo(Double unMonto) {
+    this.setSaldo(this.getSaldo() + unMonto);
+  }
+
   private void agregarMovimiento(Movimiento unMovimiento) {
     movimientos.add(unMovimiento);
   }
 
   public Double getMontoExtraidoA(LocalDate unaFecha) {
     return getMovimientos().stream()
-        .filter(mov -> mov.fueExtraido(unaFecha))
+        .filter(mov -> mov.fueExtraidoEn(unaFecha))
         .mapToDouble(Movimiento::getMonto)
         .sum();
   }
 
   public List<Movimiento> getMovimientos() {
     return movimientos;
-  }
-
-  private void setMovimientos(List<Movimiento> movimientos) {
-    this.movimientos = movimientos;
   }
 
   public Double getSaldo() {
